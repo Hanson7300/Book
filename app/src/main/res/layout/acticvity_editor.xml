@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/editor_edit_text_top"
+        android:paddingRight="@dimen/editor_edit_text_top">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/name_editText"
+                style="@style/EditText_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/name_required" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/author_editText"
+                style="@style/EditText_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/author" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/press_editText"
+                style="@style/EditText_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/press" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/price_editText"
+                style="@style/EditText_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/price_required" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/amount_editText"
+                style="@style/EditText_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/amount_required" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/sales_editText"
+                style="@style/EditText_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/sales" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/sell_one"
+            style="@style/button_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sell_one_book" />
+
+        <Button
+            android:id="@+id/send_order_intent"
+            style="@style/button_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/send_order_email" />
+
+        <Button
+            android:id="@+id/delete_current_book"
+            style="@style/button_style"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/delete_this_book" />
+
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,16 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.android.books.MainActivity">
+    <item
+        android:id="@+id/action_insert_dummy_book"
+        android:orderInCategory="100"
+        android:title="Insert Dummy Book"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_delete_all_books"
+        android:orderInCategory="100"
+        android:title="Delete ALL Books"
+        app:showAsAction="never" />
+</menu>

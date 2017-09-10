@@ -1,0 +1,4 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="editor_edit_text_top">20dp</dimen>
+</resources>

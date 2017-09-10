@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Book</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+
+    <!-- Dialog button text for the option to keep editing the current pet [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+    <string name="failed_to_insert">Failed to insert row for</string>
+    <string name="this_book_uri_is">This book uri is</string>
+    <string name="edit_book">Edit book</string>
+    <string name="add_a_book">Add a book</string>
+    <string name="information_not_valid">Information not valid</string>
+    <string name="unknown_author">Unknown author</string>
+    <string name="unknown_press">Unknown press</string>
+    <string name="error_with_saving_book">Error with saving book</string>
+    <string name="book_inserted_with_id">Book inserted with id </string>
+    <string name="error_with_update_book">Error with updating book</string>
+    <string name="successfully_update">Successfully update current book</string>
+    <string name="book_deleted">Book deleted</string>
+    <string name="error_delete_book">Error with deleting book</string>
+    <string name="we_want_more_books">We want to order more books,this is its information:</string>
+    <string name="email_address">1234567@qq.com</string>
+    <string name="email_subject">Order more books</string>
+    <string name="send_email">Send Email</string>
+    <string name="please_send_order">Sell out all books,please send order</string>
+    <string name="discard_changes_or_quit">Discard your changes and quit editing?</string>
+    <string name="keep_edit">KEEP EDITING</string>
+    <string name="delete_this_or">Delete this book?</string>
+    <string name="delete">DELETE</string>
+    <string name="cancel">CANCEL</string>
+    <string name="dummy_name">三国演义</string>
+    <string name="dummy_author">罗贯中</string>
+    <string name="dummy_press">岳麓书社</string>
+    <string name="inserted_with_id">Book inserted with id </string>
+    <string name="delete_">Delete</string>
+    <string name="_books"> books</string>
+    <string name="table_name">books</string>
+    <string name="open_book_with_uri">Open book with uri</string>
+    <string name="name_required">Name (Required)</string>
+    <string name="author">Author</string>
+    <string name="press">Press</string>
+    <string name="price_required">Price (Required)</string>
+    <string name="amount_required">Amount (Required)</string>
+    <string name="sales">Sales</string>
+    <string name="sell_one_book">Sell one book</string>
+    <string name="send_order_email">Send order email</string>
+    <string name="delete_this_book">Delete this book</string>
+    <string name="get_started_by_adding_a_book">Get started by adding a book</string>
+
+</resources>
