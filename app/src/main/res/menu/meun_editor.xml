@@ -5,18 +5,18 @@
     tools:context=".EditorActivity">
     <item
         android:id="@+id/menu_save"
-        android:title="Save"
+        android:title="@string/save"
         android:icon="@drawable/ic_done"
         app:showAsAction="always"
         />
     <item
         android:id="@+id/menu_delete_current_book"
-        android:title="Delete current book"
+        android:title="@string/delete_current_book"
         app:showAsAction="never"
         />
     <item
         android:id="@+id/menu_send_email"
-        android:title="Send email"
+        android:title="@string/send_email_menu"
         app:showAsAction="never"
         />
 </menu>

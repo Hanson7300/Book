@@ -112,7 +112,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Uri insertedRowUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI,values);
         long insertedId = ContentUris.parseId(insertedRowUri);
         if(insertedRowUri!=null){
-            //---------------------------------------------------------------------
             Toast.makeText(MainActivity.this,getString(R.string.inserted_with_id)+" "+ insertedId,Toast.LENGTH_SHORT).show();
         }
     }
