@@ -9,19 +9,21 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="150dp"
+        android:layout_width="154dp"
+        android:layout_height="225dp"
         android:id="@+id/image_main"
         android:scaleType="centerInside"
-        tools:src="@mipmap/ic_launcher"
+        tools:src="@drawable/ic_edit_test"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="8dp" />
+        android:layout_marginRight="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteX="214dp"
+        app:layout_constraintVertical_bias="0.0" />
 
 
         <TextView
@@ -32,9 +34,9 @@
             tools:text="书名:三国演义"
             android:layout_gravity="center"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="16dp"
-            android:layout_marginLeft="-3dp"
-            app:layout_constraintLeft_toLeftOf="@+id/author_text_view" />
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent" />
 
             <TextView
                 android:id="@+id/author_text_view"
@@ -44,7 +46,8 @@
                 android:layout_weight="1"
                 tools:text="作者:罗贯中"
                 android:gravity="center"
-                tools:layout_editor_absoluteX="24dp"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@+id/name_text_view" />
 
@@ -56,19 +59,19 @@
                 android:layout_weight="1"
                 tools:text="出版社:岳麓书社"
                 android:gravity="center"
+                android:layout_marginLeft="8dp"
+                app:layout_constraintLeft_toLeftOf="parent"
                 android:layout_marginTop="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/author_text_view"
-                android:layout_marginLeft="0dp"
-                app:layout_constraintLeft_toLeftOf="@+id/author_text_view" />
+                app:layout_constraintTop_toBottomOf="@+id/author_text_view" />
         <TextView
             android:id="@+id/price_text_view"
             style="@style/PriceStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="$20"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/press_text_view"
-            android:layout_marginTop="7dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/press_text_view" />
 
         <TextView
@@ -77,9 +80,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="100件"
-            android:layout_marginLeft="0dp"
-            app:layout_constraintLeft_toLeftOf="@+id/press_text_view"
-            android:layout_marginTop="9dp"
+            android:layout_marginLeft="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="8dp"
             app:layout_constraintTop_toBottomOf="@+id/price_text_view" />
 
 </android.support.constraint.ConstraintLayout>
