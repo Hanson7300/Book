@@ -62,7 +62,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent editIntent  = new Intent(MainActivity.this,EditorActivity.class);
                 //这里传入的是id不是position,传入position会导致各种奇葩问题...
-                editIntent.setData(Uri.withAppendedPath(BookContract.BookEntry.CONTENT_URI,String.valueOf(id)));
+                editIntent.setData(Uri.withAppendedPath(BookContract.BookEntry.CONTENT_URI,
+                        String.valueOf(id)));
                 startActivity(editIntent);
             }
         });
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         values.put(BookContract.BookEntry.COLUMN_BOOK_AMOUNT,100);
         values.put(BookContract.BookEntry.COLUMN_BOOK_PRICE,25.7);
         values.put(BookContract.BookEntry.COLUMN_BOOK_SALES,0);
+        values.put(BookContract.BookEntry.COLUMN_IMAGE_URI,
+                BookContract.BookEntry.DUMMY_COVER);
 
         Uri insertedRowUri = getContentResolver().insert(BookContract.BookEntry.CONTENT_URI,values);
         long insertedId = ContentUris.parseId(insertedRowUri);
@@ -121,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        //建立后台查询,条件需要写全,不然会提示column does not exist
+        //建立后台查询,只查询需要的列,(sales不需要)
         String[] projection  = {
                 BookContract.BookEntry._ID,
                 BookContract.BookEntry.COLUMN_BOOK_NAME,
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 BookContract.BookEntry.COLUMN_BOOK_PRESS,
                 BookContract.BookEntry.COLUMN_BOOK_PRICE,
                 BookContract.BookEntry.COLUMN_BOOK_AMOUNT,
-                BookContract.BookEntry.COLUMN_BOOK_SALES
+                BookContract.BookEntry.COLUMN_IMAGE_URI,
         };
         return new CursorLoader(this,
                 BookContract.BookEntry.CONTENT_URI,projection,null,null,null

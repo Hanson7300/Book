@@ -4,9 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EditorActivity">
     <item
-        android:id="@+id/action_save"
+        android:id="@+id/menu_save"
         android:title="Save"
         android:icon="@drawable/ic_done"
         app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_delete_current_book"
+        android:title="Delete current book"
+        app:showAsAction="never"
+        />
+    <item
+        android:id="@+id/menu_send_email"
+        android:title="Send email"
+        app:showAsAction="never"
         />
 </menu>

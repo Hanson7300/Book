@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="60dp"
-    android:orientation="horizontal"
     android:paddingLeft="8dp"
     android:paddingRight="8dp">
-
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:id="@+id/image_main"
+        android:scaleType="centerInside"
+        tools:src="@mipmap/ic_launcher"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,56 +26,39 @@
             style="@style/maintextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Name"
+            tools:text="书名:三国演义"
             android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/author_text_view"
                 style="@style/secondTextStyle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="Unkonon author"
+                tools:text="作者:罗贯中"
                 android:gravity="center"/>
 
             <TextView
                 android:id="@+id/press_text_view"
                 style="@style/secondTextStyle"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                tools:text="Unknown press"
+                tools:text="出版社:岳麓书社"
                 android:gravity="center"/>
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:orientation="vertical"
-        android:paddingLeft="32dp">
-
         <TextView
             android:id="@+id/price_text_view"
             style="@style/PriceStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="$20"
-            android:layout_gravity="center"/>
+            />
 
         <TextView
             android:id="@+id/amount_text_view"
             style="@style/PriceStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="100件"
-            android:layout_gravity="center"/>
+            tools:text="100件" />
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

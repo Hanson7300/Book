@@ -5,8 +5,10 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.app.NavUtils;
@@ -21,14 +23,21 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.android.book.data.BookContract;
 
 public class EditorActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
+    private static final String LOG_TAG = EditorActivity.class.getSimpleName();
 
+    private static int RESULT_LOAD_IMAGE = 1;
     private Uri openUri;
+    private String mImageUri = null;
+
+    //0代表数据无效,等待用户重新输入,1表示有效,返回MainActivity
+    private static int INFORMATION_VALID_TAG;
 
     private EditText mNameEditText;
     private EditText mAuthorEditText;
@@ -36,8 +45,11 @@ public class EditorActivity extends AppCompatActivity implements
     private EditText mPriceEditText;
     private EditText mAmountEditText;
     private EditText mSalesEditText;
+    private Button sell_button;
 
-    //定义OntouchListener 行为,如果用户有点击操作,记录在全局变量中
+    private ImageView mImageView;
+
+    //定义OnTouchListener 行为,如果用户有点击操作,记录在全局变量中
     private boolean mBookHasChanged = false;
     private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
         @Override
@@ -56,14 +68,38 @@ public class EditorActivity extends AppCompatActivity implements
         //渲染布局
         setContentView(R.layout.acticvity_editor);
 
-        //找到EditText
         mNameEditText = (EditText) findViewById(R.id.name_editText);
         mAuthorEditText = (EditText) findViewById(R.id.author_editText);
         mPressEditText = (EditText) findViewById(R.id.press_editText);
         mPriceEditText = (EditText) findViewById(R.id.price_editText);
         mAmountEditText = (EditText) findViewById(R.id.amount_editText);
         mSalesEditText = (EditText) findViewById(R.id.sales_editText);
+        sell_button = (Button) findViewById(R.id.sell_one);
+        mImageView = (ImageView) findViewById(R.id.image_editor);
 
+        //接受传入Uri,后台加载数据
+        openUri = getIntent().getData();
+        if (openUri != null) {
+
+            //提示点击列表项的uri id
+            long id = ContentUris.parseId(openUri);
+            Toast.makeText(this, getString(R.string.open_book_with_uri) + " " + id, Toast.LENGTH_SHORT).show();
+
+            //根据有无Uri改变标题
+            setTitle(getString(R.string.edit_book));
+
+            //初始化后台加载
+            getSupportLoaderManager().initLoader(BOOK_BOOK, null, this);
+
+        } else {
+            setTitle(getString(R.string.add_a_book));
+            mImageView.setImageURI(Uri.parse(BookContract.BookEntry.SELECT_IMAGE));
+        }
+
+        addListener();
+    }
+
+    private void addListener() {
         //设置点击监听器
         mNameEditText.setOnTouchListener(mTouchListener);
         mAuthorEditText.setOnTouchListener(mTouchListener);
@@ -72,51 +108,48 @@ public class EditorActivity extends AppCompatActivity implements
         mAmountEditText.setOnTouchListener(mTouchListener);
         mSalesEditText.setOnTouchListener(mTouchListener);
 
-        //接受传入Uri,后台加载数据
-        openUri = getIntent().getData();
-        if (openUri != null) {
-
-            //提示点击列表项的uri id
-            long id  = ContentUris.parseId(openUri);
-            Toast.makeText(this, getString(R.string.open_book_with_uri) +" "+ id, Toast.LENGTH_SHORT).show();
-
-            //根据有无Uri改变标题
-            setTitle(getString(R.string.edit_book));
-
-            //初始化后台加载
-            getSupportLoaderManager().initLoader(BOOK_BOOK, null, this);
-        } else {
-            setTitle(getString(R.string.add_a_book));
-
-            //隐藏删除按钮
-            hideDeleteButton();
-        }
-
-        //邮件发送订单和删除方法
-        Button send_order = (Button) findViewById(R.id.send_order_intent);
-        send_order.setOnClickListener(new View.OnClickListener() {
+        mImageView.setOnTouchListener(mTouchListener);
+        mImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendEmail();
+                Intent i = new Intent(
+                        Intent.ACTION_PICK,
+                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+                startActivityForResult(i, RESULT_LOAD_IMAGE);
             }
         });
 
-        Button delete_this_book = (Button) findViewById(R.id.delete_current_book);
-        delete_this_book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDeleteConfirmationDialog();
-            }
-        });
-
-        //增加销售减少库存
-        Button sell_button = (Button) findViewById(R.id.sell_one);
         sell_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sellOne();
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+            Uri selectedImage = data.getData();
+            String[] filePathColumn = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage,
+                    filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+            String picturePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            ImageView imageView = (ImageView) findViewById(R.id.image_editor);
+            imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+            Toast.makeText(this, "Photo uri in gallery :" + picturePath, Toast.LENGTH_SHORT).show();
+            mImageUri = picturePath;
+        }
+
     }
 
     //渲染菜单栏
@@ -127,11 +160,29 @@ public class EditorActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem deleteCurrentBook = menu.findItem(R.id.menu_delete_current_book);
+        //如果传入Uri为空,隐藏菜单栏删除按钮
+        if (openUri == null) {
+            deleteCurrentBook.setVisible(false);
+        }
+        return true;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.action_save:
+        switch (item.getItemId()) {
+            case R.id.menu_send_email:
+                sendEmail();
+                return true;
+            case R.id.menu_delete_current_book:
+                showDeleteConfirmationDialog();
+                return true;
+            case R.id.menu_save:
                 saveBook();
-                finish();
+                if (INFORMATION_VALID_TAG == 1) {
+                    finish();
+                }
                 return true;
             case android.R.id.home:
                 // If the book hasn't changed, continue with navigating up to parent activity
@@ -173,17 +224,19 @@ public class EditorActivity extends AppCompatActivity implements
         //去掉priceEditText 的$符号,如果用户输入的末位是小数点,也去掉
         String[] priceWith_sign = priceStringInput.split(" ");
         String purePrice = priceWith_sign[0];
-        if(purePrice.contains(".")){
-            if (purePrice.indexOf(".")==purePrice.length()){
-                purePrice.substring(0,purePrice.length()-1);
+        if (purePrice.contains(".")) {
+            if (purePrice.indexOf(".") == purePrice.length()) {
+                purePrice.substring(0, purePrice.length() - 1);
             }
         }
 
-        //关键项任何一项为空,提示用户,提前返回
+        //关键项任何一项为空,提示用户
         if (TextUtils.isEmpty(nameStringInput)
                 || TextUtils.isEmpty(purePrice)
                 || TextUtils.isEmpty(amountStringInput)) {
             Toast.makeText(this, R.string.information_not_valid, Toast.LENGTH_SHORT).show();
+            //用户输入无效,留在当前页面
+            INFORMATION_VALID_TAG = 0;
             return;
         }
 
@@ -197,6 +250,9 @@ public class EditorActivity extends AppCompatActivity implements
         if (TextUtils.isEmpty(salesStringInput)) {
             salesStringInput = "0";
         }
+        if (mImageUri == null) {
+            mImageUri = "android.resource://com.example.android.book/drawable/ic_no_image";
+        }
 
         ContentValues saveValues = new ContentValues();
         saveValues.put(BookContract.BookEntry.COLUMN_BOOK_NAME, nameStringInput);
@@ -205,6 +261,7 @@ public class EditorActivity extends AppCompatActivity implements
         saveValues.put(BookContract.BookEntry.COLUMN_BOOK_PRICE, Float.valueOf(purePrice));
         saveValues.put(BookContract.BookEntry.COLUMN_BOOK_AMOUNT, Integer.valueOf(amountStringInput));
         saveValues.put(BookContract.BookEntry.COLUMN_BOOK_SALES, Integer.valueOf(salesStringInput));
+        saveValues.put(BookContract.BookEntry.COLUMN_IMAGE_URI, mImageUri);
 
         //根据有无Uri判断使用insert还是update
         if (openUri == null) {
@@ -228,7 +285,8 @@ public class EditorActivity extends AppCompatActivity implements
                 Toast.makeText(this, R.string.successfully_update, Toast.LENGTH_SHORT).show();
             }
         }
-
+        //insert或者update调用成功,设置为可以返回mainActivity
+        INFORMATION_VALID_TAG = 1;
     }
 
     private void deleteCurrentBook() {
@@ -345,7 +403,7 @@ public class EditorActivity extends AppCompatActivity implements
         unSaveAlertDialog.show();
     }
 
-    private void showDeleteConfirmationDialog(){
+    private void showDeleteConfirmationDialog() {
         // Create an AlertDialog.Builder and set the message, and click listeners
         // for the postivie and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -373,11 +431,6 @@ public class EditorActivity extends AppCompatActivity implements
         deleteAlertDialog.show();
     }
 
-    private void hideDeleteButton(){
-        Button deleteButton = (Button)findViewById(R.id.delete_current_book);
-        deleteButton.setVisibility(View.GONE);
-    }
-
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (openUri == null) {
@@ -391,7 +444,8 @@ public class EditorActivity extends AppCompatActivity implements
                 BookContract.BookEntry.COLUMN_BOOK_PRESS,
                 BookContract.BookEntry.COLUMN_BOOK_PRICE,
                 BookContract.BookEntry.COLUMN_BOOK_AMOUNT,
-                BookContract.BookEntry.COLUMN_BOOK_SALES
+                BookContract.BookEntry.COLUMN_BOOK_SALES,
+                BookContract.BookEntry.COLUMN_IMAGE_URI
         };
         return new CursorLoader(this,
                 //使用传入的Uri查询,如果写成CONTENT_URI,会查询整个表,并返回第一行的数据
@@ -417,11 +471,10 @@ public class EditorActivity extends AppCompatActivity implements
             Integer amountInt = data.getInt(data.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_AMOUNT));
             Integer salesInt = data.getInt(data.getColumnIndex(BookContract.BookEntry.COLUMN_BOOK_SALES));
 
-            //数据写入EditText
-            mNameEditText.setText(nameString);
+            String imageUri = data.getString(data.getColumnIndexOrThrow(BookContract.BookEntry.COLUMN_IMAGE_URI));
 
             //如果是编辑器默认值,设置为空,方便编辑
-            if (authorString.equals(getString(R.string.unknown_author))){
+            if (authorString.equals(getString(R.string.unknown_author))) {
                 mAuthorEditText.setText("");
             } else {
                 mAuthorEditText.setText(authorString);
@@ -431,9 +484,24 @@ public class EditorActivity extends AppCompatActivity implements
             } else {
                 mPressEditText.setText(pressString);
             }
+
+            //数据写入EditText
+            mNameEditText.setText(nameString);
             mPriceEditText.setText(String.valueOf(priceInt));
             mAmountEditText.setText(String.valueOf(amountInt));
             mSalesEditText.setText(String.valueOf(salesInt));
+
+            //图片写入TextView
+            if (imageUri != null) {
+                //图片Uri有两种,默认封面来自drawable,从图库中选择的来自SD卡,方法不同
+                if (imageUri.contains("resource://")) {
+                    mImageView.setImageURI(Uri.parse(imageUri));
+                } else {
+                    mImageView.setImageBitmap(BitmapFactory.decodeFile(imageUri));
+                }
+            } else {
+                mImageView.setImageURI(Uri.parse(BookContract.BookEntry.SELECT_IMAGE));
+            }
         }
     }
 
@@ -446,6 +514,8 @@ public class EditorActivity extends AppCompatActivity implements
         mPriceEditText.setText("");
         mAmountEditText.setText("");
         mSalesEditText.setText("");
+        mImageView.setImageURI(Uri.parse(BookContract.BookEntry.NO_IMAGE_URI));
     }
+
 
 }

@@ -28,11 +28,16 @@ public final class BookContract {
         public static final String COLUMN_BOOK_AMOUNT= "amount";
         public static final String COLUMN_BOOK_PRICE = "price";
         public static final String COLUMN_BOOK_SALES = "sales";
+        public static final String COLUMN_IMAGE_URI = "uri";
 
         public static final String CONTENT_LIST_TYPE =
                 ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + BOOK_PATH;
 
         public static final String CONTENT_ITEM_TYPE =
                 ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + BOOK_PATH;
+
+        public static final String DUMMY_COVER ="android.resource://com.example.android.book/drawable/ic_dummy_cover";
+        public static final String SELECT_IMAGE ="android.resource://com.example.android.book/drawable/ic_add_image";
+        public static final String NO_IMAGE_URI = "android.resource://com.example.android.book/drawable/ic_no_image";
     }
 }

@@ -27,6 +27,9 @@
             android:authorities="com.example.android.books"
             android:name=".data.BookProvider"
             android:exported="false"/>
-    </application>
 
+    </application>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 </manifest>
