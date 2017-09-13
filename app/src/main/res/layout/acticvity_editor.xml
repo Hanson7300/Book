@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginTop="8dp"
             android:hint="@string/amount_required"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -102,32 +102,32 @@
             style="@style/EditText_number"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="7dp"
             android:hint="@string/sales"
-            app:layout_constraintHorizontal_bias="0.176"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/sell_one"
             app:layout_constraintTop_toBottomOf="@+id/amount_editText"
             tools:layout_conversion_absoluteHeight="42dp"
             tools:layout_conversion_absoluteWidth="150dp"
             tools:layout_conversion_absoluteX="20dp"
-            tools:layout_conversion_absoluteY="281dp" />
+            tools:layout_conversion_absoluteY="281dp"
+            android:layout_marginLeft="0dp"
+            app:layout_constraintLeft_toLeftOf="@+id/amount_editText"
+            app:layout_constraintHorizontal_bias="0.0" />
 
         <Button
             android:id="@+id/sell_one"
             style="@style/button_style"
             android:layout_width="90dp"
             android:layout_height="48dp"
-            android:layout_marginRight="37dp"
             android:text="@string/sell_one_book"
-            app:layout_constraintRight_toRightOf="parent"
             tools:layout_conversion_absoluteHeight="30dp"
             tools:layout_conversion_absoluteWidth="90dp"
             tools:layout_conversion_absoluteX="274dp"
             tools:layout_conversion_absoluteY="282dp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/sales_editText" />
+            app:layout_constraintBaseline_toBaselineOf="@+id/sales_editText"
+            android:layout_marginRight="0dp"
+            app:layout_constraintRight_toRightOf="@+id/amount_editText" />
 
 
         <ImageView

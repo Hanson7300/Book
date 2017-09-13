@@ -97,7 +97,7 @@ public class BookProvider extends ContentProvider {
         Long insertedId = database.insert(BookContract.BookEntry.TABLE_NAME, null, values);
         if (insertedId == -1) {
             //如果insert失败,记录日志,提前返回null
-            Log.e(LOG_TAG, "Fail to insert " + uri);
+            Log.e(LOG_TAG,"Fail to insert" + uri);
             return null;
         }
         //insert成功时发送通知

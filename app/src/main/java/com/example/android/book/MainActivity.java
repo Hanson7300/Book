@@ -21,7 +21,8 @@ import android.widget.Toast;
 
 import com.example.android.book.data.BookContract;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor>{
 
     private static final int BOOK_LOADER = 0;
     BookCursorAdapter mBookCursorAdapter;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent editIntent  = new Intent(MainActivity.this,EditorActivity.class);
+
                 //这里传入的是id不是position,传入position会导致各种奇葩问题...
                 editIntent.setData(Uri.withAppendedPath(BookContract.BookEntry.CONTENT_URI,
                         String.valueOf(id)));
@@ -123,7 +125,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        //建立后台查询,只查询需要的列,(sales不需要)
+        //建立后台查询,全部列
         String[] projection  = {
                 BookContract.BookEntry._ID,
                 BookContract.BookEntry.COLUMN_BOOK_NAME,
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 BookContract.BookEntry.COLUMN_BOOK_PRICE,
                 BookContract.BookEntry.COLUMN_BOOK_AMOUNT,
                 BookContract.BookEntry.COLUMN_IMAGE_URI,
+                BookContract.BookEntry.COLUMN_BOOK_SALES
         };
         return new CursorLoader(this,
                 BookContract.BookEntry.CONTENT_URI,projection,null,null,null

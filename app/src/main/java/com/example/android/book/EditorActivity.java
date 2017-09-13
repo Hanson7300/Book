@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
@@ -385,7 +386,7 @@ public class EditorActivity extends AppCompatActivity implements
         // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.discard_changes_or_quit);
-        builder.setPositiveButton("DISCARD", discardButtonClickListener);
+        builder.setPositiveButton(R.string.discard_, discardButtonClickListener);
 
         // User clicked the "Keep editing" button, so dismiss the dialog
         // and continue editing the book.
@@ -491,13 +492,18 @@ public class EditorActivity extends AppCompatActivity implements
             mAmountEditText.setText(String.valueOf(amountInt));
             mSalesEditText.setText(String.valueOf(salesInt));
 
+
+            //设置图片显示格式
+            BitmapFactory.Options newOption = new BitmapFactory.Options();
+            newOption.inPreferredConfig = Bitmap.Config.RGB_565;
+
             //图片写入TextView
             if (imageUri != null) {
                 //图片Uri有两种,默认封面来自drawable,从图库中选择的来自SD卡,方法不同
                 if (imageUri.contains("resource://")) {
                     mImageView.setImageURI(Uri.parse(imageUri));
                 } else {
-                    mImageView.setImageBitmap(BitmapFactory.decodeFile(imageUri));
+                    mImageView.setImageBitmap(BitmapFactory.decodeFile(imageUri,newOption));
                 }
             } else {
                 mImageView.setImageURI(Uri.parse(BookContract.BookEntry.SELECT_IMAGE));

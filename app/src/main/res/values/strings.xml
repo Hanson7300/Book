@@ -59,5 +59,8 @@
     <string name="save">Save</string>
     <string name="delete_current_book">Delete current book</string>
     <string name="send_email_menu">Send email</string>
+    <string name="no_book_left">No book Left</string>
+    <string name="fail_to_insert">Fail to insert</string>
+    <string name="discard_">DISCARD</string>
 
 </resources>
